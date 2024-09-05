@@ -1,0 +1,41 @@
+steps1
+ first we have to go to the kafka path and cmd to zookeeper
+
+C:\kafka>bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+zookeeper must be up and running 
+
+step 2
+now we have to start the kafka server
+
+C:\kafka>bin\windows\kafka-server-start.bat config\server.properties
+
+step 3 
+create the kafka topic 
+
+C:\kafka>bin\windows\kafka-topics.bat --create --topic user-topic --bootstrap-server localhost:9092
+
+step 4
+produce topic by using this command
+
+ C:\kafka>bin\windows\kafka-console-producer.bat --topic user-topic --bootstrap-server localhost:9092
+
+
+step 5 
+read the topics
+
+C:\kafka>bin\windows\kafka-console-consumer.bat --topic user-topic --from-beginning --bootstrap-server localhost:9092
+
+step 6:
+configuration for application.yml file
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
